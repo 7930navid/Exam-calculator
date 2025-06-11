@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Selection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: auto 10px;
+            padding: 0;
+            background-color: #f5f5f5;
+            padding: 20px;
+            background: lightgreen;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            background-color: #FFD700;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .btn {
+            width: 40px;
+            height: 30px;
+            background-color: white;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 110%;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .dropdown-content button {
+            width: 100%;
+            padding: 12px 16px;
+            text-align: left;
+            border: none;
+            background: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .dropdown-content button:hover {
+            background-color: #E1F5FE;
+            color: #0288D1;
+        }
+
+        .show {
+            display: block;
+        }
+
+        #aboutSection, #homeSection {
+            display: none;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 800px;
+            border: 1px solid #e0e0e0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-weight: bold;
+            color: #757575;
+            font-size: 20px;
+            padding: 0 5px;
+        }
+
+        .close-btn:hover {
+            color: #424242;
+        }
+
+        .section-title {
+            color: #333;
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        .input-section {
+            text-align: center;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+
+        .title-input {
+            width: 80%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .subject-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .subject-table th {
+            background-color: #0288D1;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .subject-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .subject-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .subject-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .subject-input, .number-input {
+            width: 90%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .subject-input:focus, .number-input:focus, .title-input:focus {
+            outline: none;
+            border-color: #0288D1;
+            box-shadow: 0 0 0 2px rgba(2,136,209,0.2);
+        }
+
+        .add-row-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .add-row-btn:hover {
+            background-color: #388E3C;
+        }
+
+        .remove-row-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .remove-row-btn:hover {
+            background-color: #d32f2f;
+        }
+       .numbtn{
+           background: cyan;
+           width: 70px;
+           border: none;
+           color: red;
+           height: 40px;
+       }
+      .red-btn{
+          background: red;
+           width: 70px;
+           border: none;
+           color: white;
+           height: 40px;
+      }
+      .green-btn{
+          background: green;
+           width: 70px;
+           border: none;
+           color: white;
+           height: 40px;
+      }
+     .input{
+         background: cyan;
+         border: 1px solid lightyellow;
+         height: 30px;
+         text-align: right;
+         color: red;
+     }
+     .place-th{
+         background: cyan;
+         color: red;
+         text-align: center;
+     }
+            .button {
+            background: linear-gradient(to top, orange,violet);
+            width: 32%;
+            height: 50px;
+            color: cyan;
+            font-size: 10px;
+            border: none;
+            border-radius: 15px;
+           cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #displa{
+            text-align: right;
+            height: 30px;
+            font-size: 16px;
+            color: red;
+            width: 250px;
+            
+        }
+
+    </style>
+</head>
+<body>
+          
+      
+            <div style="text-align: left">
+          <a href="https://7930navid.github.io/Hafez-MD.AsirAbrarKhan" style="
+          text-align: left;
+          color: gray;
+          font-size: 10px;
+          ">
+<i>Builder and Developer: <b>Hafez Md. Asir Abrar Khan</b></i>              
+          </a></div>
+    
+      
+
+    <div class="button-container">        
+        <div style="text-align: right; width: 100%; padding-right: 20px;">
+            <button onclick="toggleDropdown()" class="btn">...</button>
+            <div id="myDropdown" class="dropdown-content">
+ <button onclick="placeCalculator()">Place Calculator</button>
+ <button onclick="showCalculator()">Number Calculator</button>
+  <button onclick="simpleCalculator()"  <button onclick="simpleCalculator()">Simple Calculator</button>
+
+
+ <button onclick="about()">About</button>
+            </div>
+        </div>
+    </div>
+    <div id="display"><br>
+        <div style="font-family: Arial, sans-serif; background: #f8f9fa; color: #333; padding: 0; margin: 0;">
+    <header style="background: #4CAF50; color: white; padding: 20px 10px; text-align: center;">
+      <h1>📊 Welcome to Exam Calculator</h1>
+      <p>A smart tool for calculating total marks, average, subject count, and ranking — all in one place!</p>
+    </header>
+    <section id="cta" style="max-width: 800px; margin: 30px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); text-align: center;">
+      <h2>Start Calculating Your Exam Results Now!</h2>
+      <button onclick="downBtn()" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; font-size: 1em; border-radius: 6px; cursor: pointer;">🎯 Go to Calculator</button>
+    </section>
+
+<div id="downBtn">
+
+  </div> 
+    </div>
+    
+<script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+                function insertHTML(html) {
+            document.getElementById("display").innerHTML = html;
+        }
+
+
+        function showCalculator() {
+        insertHTML(`
+            <br>
+     <div style="text-align: right;"> 
+     <button onclick="location.reload()"
+   style="
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   border: none;
+   background: green;
+   color: white;
+   ">×</button></div>
+       <br><br>    
+     <div style="background-color: #333; border-radius: 10px;">               
+     <div style="text-align: right;"> 
+     <button onclick="help1()"
+   style="
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+   border: none;
+   color: red;
+   ">?</button></div>
+    <h2 style="
+            
+            color: white;
+            background-color: gray;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-radius: 20px;
+    ">
+    Number Calculator
+    </h2></div>
+    <br><div style="text-align: center">
+
+    <table border="0" cellspacing="0" cellpadding="1"
+    align="center" style="none;">
+        <tr>
+            <th colspan="4" style="background: lightgreen;">
+                <input type="text" id="display-input" disabled placeholder="0" class="input" style="width: 285px; border:none;">
+            </th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>Max-Number: </p>
+            </td>
+            <th colspan="2" style="background: lightgreen;">
+                <input type="number" id="maxNum"  placeholder="0" class="input" style="width: 130px; border:none; background: lightgreen; text-align: left;">
+            </th>
+        </tr>
+        <tr>
+            <td><input type="button" value="1" onclick="appendValue('1')" class="numbtn"></td>
+            <td><input type="button" value="2" onclick="appendValue('2')" class="numbtn"></td>
+            <td><input type="button" value="3" onclick="appendValue('3')" class="numbtn"></td>
+            <th><input type="button" value="SUM" onclick="calculate(); average(); sub()" class="green-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="4" onclick="appendValue('4')" class="numbtn"></td>
+            <td><input type="button" value="5" onclick="appendValue('5')" class="numbtn"></td>
+            <td><input type="button" value="6" onclick="appendValue('6')" class="numbtn"></td>
+            <th><input type="button" value="+" onclick="appendValue('+')" class="green-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="7" onclick="appendValue('7')" class="numbtn"></td>
+            <td><input type="button" value="8" onclick="appendValue('8')" class="numbtn"></td>
+            <td><input type="button" value="9" onclick="appendValue('9')" class="numbtn"></td>
+            <th><input type="button" value="AC" onclick="clearDisplay()" class="red-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="." onclick="appendValue('.')" class="numbtn"></td>
+            <td><input type="button" value="0" onclick="appendValue('0')" class="numbtn"></td>
+            <td><input type="button" value="00" onclick="appendValue('00')" class="numbtn"></td>
+            <th><input type="button" value="C" onclick="deleteLast()" class="red-btn"></th>
+        </tr>
+    </table></div><br><br><hr><br><br>
+
+    <div class="bottom-spacing"></div>
+
+    <table>
+        <tr>
+            <td class="label-cell">Subject count:</td>
+            <td><input class="input" type="text" id="countDown" disabled value="0"></td>
+        </tr>
+        <tr>
+            <td class="label-cell">Total number:</td>
+            <td><input class="input" type="text" id="total" disabled value="0"></td>
+        </tr>
+        <tr>
+            <td class="label-cell">Average number:</td>
+            <td><input class="input" type="text" id="average" disabled value="0%"></td>
+        </tr>
+    </table>
+
+
+            `);
+            document.getElementById("myDropdown").classList.remove("show");
+        }
+
+    </script>
+    <script>
+        function appendValue(value) {
+    document.getElementById("display-input").value += value;
+}
+
+function clearDisplay() {
+    document.getElementById("display-input").value = "";
+    document.getElementById("total").value = "0";
+    document.getElementById("countDown").value = "0";    
+    document.getElementById("average").value = "0%";
+    
+}
+
+function deleteLast() {
+    let display = document.getElementById("display-input");
+    display.value = display.value.slice(0, -1);
+    sub();  // Add this line to update countDown when "+" is deleted
+}
+        function calculate() {
+            let display = document.getElementById("display-input");
+            let countDown = document.getElementById("countDown");
+            let average = document.getElementById("average");
+            let total = document.getElementById("total");
+
+            try {
+                let totalValue = eval(display.value);
+                let count = parseInt(countDown.value);
+                total.value = totalValue;
+
+                if (count > 0) {
+                    average.value = ((totalValue) / count).toFixed(2) + " %";
+                } else {
+                    average.value = alert("Enter number above");
+                }
+            } catch (error) {
+                display.value = "Error";
+                total.value = "Error";
+                average.value = "Error";
+            }
+        }
+        
+        function average(){
+document.getElementById("average").value = 
+(document.getElementById("total").value/(document.getElementById("countDown").value*document.getElementById("maxNum").value))*100 + "%"
+
+        }
+
+
+let previousPlusCount = -1;  // global variable, একবার স্ক্রিপ্ট লোড হলে থাকবে
+
+function sub() {
+    let display = document.getElementById("display-input").value;
+    let currentPlusCount = (display.match(/\+/g) || []).length;
+
+    let countDownElement = document.getElementById("countDown");
+    let countDownValue = parseInt(countDownElement.value) || 0;
+
+    // পার্থক্য বের করো (বাড়া বা কমা)
+    let diff = currentPlusCount - previousPlusCount;
+
+    // countDown আপডেট করো
+    countDownElement.value = countDownValue + diff;
+
+    // নতুন প্লাস কাউন্ট মনে রেখো
+    previousPlusCount = currentPlusCount;
+}   
+</script>
+<script>
+function placeCalculator() {
+  insertHTML(`
+                <br>
+     <div style="text-align: right;"> 
+     <button onclick="location.reload()"
+   style="
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   border: none;
+   background: green;
+   color: white;
+   ">×</button></div>
+       <br><br>    
+     <div style="background-color: #333; border-radius: 10px;">               
+     <div style="text-align: right;"> 
+     <button onclick="help2()"
+   style="
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+   border: none;
+   color: red;
+   ">?</button></div>
+    <h2 style="
+            
+            color: white;
+            background-color: gray;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-radius: 20px;
+    ">
+    Place Calculator
+    </h2></div>
+    <br>
+    <table id="studentTable" border="1" cellspacing="0" cellpadding="2" style="border: 1px solid pink; width: 100%; border-radius: 10px;">
+      <thead>
+        <tr>
+          <td class="place-th">Student Name</td>
+          <td class="place-th">Marks</td>
+          <td class="place-th">Remove</td>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be added here -->
+      </tbody>
+    </table>
+
+    <button onclick="addRow()" style="
+    background: lightyellow;
+    border: 2px solid blue;
+    color: blue;
+    border-radius: 10px;
+    ">Add Student</button>
+    <br><br>
+    <button onclick="calculatePlaces()" style="
+    background: lightyellow;
+    border: 2px solid red;
+    color: red;
+    border-radius: 10px;
+    width: 100%;
+    ">Calculate Places</button>
+                <h3  style="
+            color: red;
+            background-color: none;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-radius: 20px;
+    ">Result:</h3>
+    <table id="resultTable" border="1" cellspacing="0" cellpadding="5" style="display:none; background: white; border: 1px solid yellow; width: 100%;">
+      <thead>
+        <tr>          
+          <th>Student Name</th>
+          <th>Marks</th>
+          <th>Place</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Result rows -->
+      </tbody>
+    </table>
+
+
+  `);
+
+  // ✅ এখন DOM-এ table আছে, তাই error হবে না
+  addRow();
+  addRow();
+  addRow();
+  addRow();
+  addRow();
+  }
+</script>
+    <script>
+  // Add initial row on load
+  //addRow();
+
+  function addRow() {
+    const tbody = document.querySelector('#studentTable tbody');
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Enter name.." required style="
+      width: 140px;
+      border: none;
+      border-radius: 0px;
+      font-size: 14px;
+      color: red;
+      padding: 4px;
+      background: lightgreen;
+      "></td>
+      <td><input type="number" placeholder="Mark" min="0" required style="
+      width: 50px;
+      border: none;
+      border-radius: 0px;
+      font-size: 14px;
+      color: red;
+      padding: 4px;
+      background: lightgreen;
+      text-align: center;
+"></td>
+      <td><button onclick="removeRow(this)"
+ style="
+        
+        
+      width: 100%;
+      border: 1px solid red;
+      border-radius: 0px;
+      font-size: 14px;
+      color: red;
+      padding: 4px;
+      background: lightpink;
+"     
+      >remove</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function removeRow(btn) {
+    btn.parentElement.parentElement.remove();
+  }
+
+function calculatePlaces() {
+  const tbody = document.querySelector('#studentTable tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  let students = [];
+
+  for (const row of rows) {
+    const nameInput = row.cells[0]?.querySelector('input');
+    const marksInput = row.cells[1]?.querySelector('input');
+
+    if (!nameInput || !marksInput) continue;
+
+    const name = nameInput.value.trim();
+    const marks = parseFloat(marksInput.value);
+
+    if (!name) {
+      alert('Please enter all student names or remove unvalied rows.');
+      return;
+    }
+    if (isNaN(marks)) {
+      alert('Please enter valid marks for all students.');
+      return;
+    }
+
+    students.push({ name, marks });
+  }
+
+  // Sort students by marks (descending)
+  students.sort((a, b) => b.marks - a.marks);
+
+  // Assign places with tie handling
+  let place = 1;
+  let lastMarks = null;
+  let lastPlace = 1;
+
+  for (let i = 0; i < students.length; i++) {
+    if (students[i].marks === lastMarks) {
+      students[i].place = lastPlace;
+    } else {
+      students[i].place = place;
+      lastMarks = students[i].marks;
+      lastPlace = place;
+    }
+    place++;
+  }
+
+  // Prepare result display
+  const resultTable = document.getElementById('resultTable');
+  const resultBody = resultTable.querySelector('tbody');
+  resultBody.innerHTML = ''; // Clear previous results
+
+  for (const student of students) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+     <td>${student.name}</td>
+     <td>${student.marks}</td>
+     <td>${student.place}</td>
+    `;
+    resultBody.appendChild(tr);
+  }
+
+  resultTable.style.display = 'table';
+}
+
+</script>
+
+<script>
+    function about(){
+        insertHTML(`
+            <br>
+            <div style="background: lightyellow;
+            padding: 20px; border-radius: 10px;">
+            <div style="text-align: right;">
+    <button onclick="location.reload()" style="
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   border: none;
+   background: green;
+   color: white;
+   ">×</button></div>
+  <h3 style="color: red; text-align: center;">About Exam Calculator</h3>
+  <p><strong>Exam Calculator</strong> is a dynamic, bilingual web-based application designed to help students, teachers, and guardians calculate and analyze examination results quickly and accurately.</p>
+  
+  <p>This tool offers a variety of useful features:</p>
+  <ul>
+    <li>✅ <strong>Total Marks Calculation:</strong> Instantly adds up all entered marks to display the total.</li>
+    <li>📊 <strong>Average Score:</strong> Calculates the average mark based on the number of subjects entered.</li>
+    <li>🏅 <strong>Rank/Position:</strong> (Optional or Comparative) Helps determine a student's position if marks of others are also entered.</li>
+    <li>🔢 <strong>Subject Count:</strong> Automatically detects how many subjects are entered based on the "+" signs in the input field.</li>
+      </ul>
+  
+  <p>The Exam Calculator is designed for simplicity, speed, and clarity. Whether you're a student trying to assess your own performance, a parent checking your child's progress, or a teacher handling multiple students' marks, this tool makes the task effortless.</p>
+  
+  <p>Its smart design automatically interprets input format, dynamically adjusts the subject count, and updates all values in real-time without needing manual recalculations.</p>
+
+  <p>🔧 This calculator is ideal for madrasas, schools, coaching centers, or personal use—especially in educational environments where quick assessment is needed without using complex spreadsheets or software.</p>
+
+  </div>
+  <p style="font-size: 0.9em; color: gray;">Developed by <strong>Hafez MD. Asir Abrar Khan</strong> | Visit my official site: 
+  <a href="https://7930navid.github.io/Hafez-MD.AsirAbrarKhan" target="_blank">https://7930navid.github.io/Hafez-MD.AsirAbrarKhan</a></p>
+`);
+    }
+</script>
+<script>
+    function downBtn(){
+ document.getElementById("downBtn").innerHTML=`
+      <div style="text-align: right;"> 
+     <button onclick="location.reload()"
+   style="
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+   border: none;
+   background: green;
+   color: white;
+   font-size: 10px;
+   ">×</button></div>
+
+                 <button onclick="placeCalculator()" class="button">PLACE<br>CALCULATOR</button>
+            </th>
+            <th>
+                <button onclick="showCalculator()" class="button">NUMBER<br>CALCULATOR</button>
+            </th>
+            <th>
+                <button onclick="simpleCalculator()" class="button">SIMPLE<br>CALCULATOR</button>
+            </th>
+        </tr>
+    </table>
+    
+
+ `;       
+    }
+    function simpleCalculator(){
+        insertHTML(`
+            
+            <br><br>
+                 <div style="text-align: right;"> 
+     <button onclick="location.reload()"
+   style="
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+   border: none;
+   background: green;
+   color: white;
+   font-size: 10px;
+   ">×</button></div>
+
+        <table border="0" cellspacing="2" cellpadding="0" align="center">
+        <tr>
+            <th colspan="4" style="background:rgb(0,200,255);">
+                <input type="text" id="displa" disabled placeholder="0">
+            </th>
+        </tr>
+        <tr>
+            <th><input type="button" value="AC" onclick="allClear()" class="red-btn"></th>
+            <th><input type="button" value="C" onclick="clearLast()"  class="red-btn"></th>
+            <th><input type="button" value="%" onclick="appearValue('%')" class="green-btn"></th>
+            <th><input type="button" value="=" onclick="calculateDisplay()"  class="green-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="1" onclick="appearValue('1')" class="numbtn"></td>
+            <td><input type="button" value="2" onclick="appearValue('2')" class="numbtn"></td>
+            <td><input type="button" value="3" onclick="appearValue('3')" class="numbtn"></td>
+            <th><input type="button" value="+" onclick="appearValue('+')"class="green-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="4" onclick="appearValue('4')" class="numbtn"></td>
+            <td><input type="button" value="5" onclick="appearValue('5')" class="numbtn"></td>
+            <td><input type="button" value="6" onclick="appearValue('6')" class="numbtn"></td>
+            <th><input type="button" value="-" onclick="appearValue('-')"class="green-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="7" onclick="appearValue('7')" class="numbtn"></td>
+            <td><input type="button" value="8" onclick="appearValue('8')" class="numbtn"></td>
+            <td><input type="button" value="9" onclick="appearValue('9')" class="numbtn"></td>
+            <th><input type="button" value="*" onclick="appearValue('*')" class="green-btn"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="." onclick="appearValue('.')" class="numbtn"></td>
+            <td><input type="button" value="0" onclick="appearValue('0')" class="numbtn"></td>
+            <td><input type="button" value="00" onclick="appearValue('00')" class="numbtn"></td>
+
+            <th><input type="button" value="/" onclick="appearValue('/')"class="green-btn"></th>
+        </tr>
+    </table>
+
+            `)
+    }
+    
+    function appearValue(value) {
+    document.getElementById("displa").value += value;
+}
+
+function allClear() {
+    document.getElementById("displa").value = "";
+}
+
+function clearLast() {
+    let display = document.getElementById("displa");
+    display.value = display.value.slice(0, -1);
+}
+
+function calculateDisplay() {
+    let display = document.getElementById("displa");
+    try {
+        display.value = eval(display.value.replace(/%/g, '/100'));
+    } catch (error) {
+        display.value = "Error";
+    }
+}
+
+
+function help1() {
+  alert(
+    "📘 Number Calculator Help:\n\n" +
+    "➤ Use the number buttons (0–9, 00, .) to input values.\n" +
+    "➤ Use the '+' button to add multiple numbers together.\n" +
+    "   Example: 45+50+60\n\n" +
+    "➤ Press 'SUM' to calculate:\n" +
+    "   • Total of all numbers\n" +
+    "   • Number of subjects (based on '+' count)\n" +
+    "   • Average (%)\n\n" +
+    "➤ You can enter a Max-Number in the top right field to help calculate the percentage average.\n\n" +
+    "Other Buttons:\n" +
+    "• AC – Clears everything.\n" +
+    "• C – Deletes the last input character.\n\n" +
+    "Note: The calculator only works correctly when numbers are separated by '+'."
+  );
+}
+function help2() {
+  alert(
+    "🏅 Place Calculator Help:\n\n" +
+    "➤ Click 'Add Student' to insert new rows for student name and marks.\n" +
+    "   • Example: Name: Ayesha | Marks: 85\n" +
+    "➤ Enter marks for each student carefully.\n" +
+    "➤ Click the remove button beside a student to remove that row.\n\n" +
+    "➤ After entering all data, click 'Calculate Places'.\n" +
+    "   • Students will be sorted by marks in descending order.\n" +
+    "   • The highest mark gets 1st place, next gets 2nd, and so on.\n\n" +
+    "📌 Tip: Make sure all marks are numbers. Empty or invalid entries may cause errors."
+  );
+}
+
+</script>
+
+</body>
+</html>
